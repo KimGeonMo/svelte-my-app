@@ -1,38 +1,58 @@
-# create-svelte
+### svelte 설정하기
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+터미널
 
-## Creating a project
+    npm create svelte@latest svelte-my-app
+    cd svelte-my-app
+    npm run install
+    npm run dev
+출처 : https://kit.svelte.dev/
 
-If you're seeing this, you've probably already done this step. Congrats!
+### tailwind css 설정하기
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+터미널
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init tailwind.config.cjs -p
 
-## Developing
+svelte.config.js 수정
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+    import adapter from '@sveltejs/adapter-auto';
+    
+    // 라인 추가
+    import { vitePreprocess } from '@sveltejs/kit/vite';
+    
+    /** @type {import('@sveltejs/kit').Config} */
+    const config = {
+    kit: {
+    adapter: adapter()
+    },
+    
+    // 라인 추가 
+    preprocess: vitePreprocess()
+    };
+    
+    export default config;
 
-```bash
-npm run dev
+tailwind.config.cjs 수정
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+    /** @type {import('tailwindcss').Config} */
+    module.exports = {
 
-## Building
+    // 라인 추가
+    content: ['./src/**/*.{html,js,svelte,ts}'],
+    theme: {
+    extend: {}
+    },
+    plugins: []
+    };
 
-To create a production version of your app:
+app.css 생성 (/src/app.css)
+    
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
 
-```bash
-npm run build
-```
+layout.svelte import
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+    import "../app.css";
