@@ -56,3 +56,5 @@ app.css 생성 (/src/app.css)
 layout.svelte import
 
     import "../app.css";
+
+출처 : https://tailwindcss.com/docs/guides/sveltekit
